@@ -1,0 +1,535 @@
+---
+layout: default
+title: RumusMusic - Kumpulan Chord Kunci Gitar
+description: Kumpulan chord kunci gitar dasar dan mudah disertai lirik lagu Indonesia maupun Mancanegara
+---
+
+<div class="search-container">
+  <div class="container">
+    <form class="search-form" action="/search/" method="get">
+      <input type="text" name="q" class="search-input" placeholder="Cari chord lagu favoritmu..." required>
+      <button type="submit" class="search-button">🔍</button>
+    </form>
+  </div>
+</div>
+
+<!-- Ads Placement -->
+<div class="ads-section">
+  <div class="container">
+    {% include adsense.html %}
+  </div>
+</div>
+
+{% include alpha-nav.html %}
+
+<div class="main-wrapper">
+  <div class="main-content-area">
+    <div class="hero">
+      <h1>{{ site.title }}</h1>
+      <p>{{ site.description }}</p>
+      <div class="hero-buttons">
+        <a href="/chords/" class="btn">Lihat Semua Chord</a>
+        <a href="/transpose/" class="btn btn-outline">Transpose Chord</a>
+      </div>
+    </div>
+
+    <!-- Featured Posts Section -->
+    <div class="featured-section">
+      <h2>Chord Terbaru</h2>
+      <div class="chord-grid">
+        {% assign latest_posts = site.posts %}
+        {% assign latest_posts = latest_posts | slice: 0, 6 %}
+        {% for post in latest_posts %}
+        <div class="chord-card">
+          <a href="{{ post.url | relative_url }}" class="chord-card-link">
+            <div class="chord-card-inner">
+              <div class="chord-thumbnail">
+                <span class="chord-badge">New</span>
+                {% assign title_parts = post.title | split: ' - ' %}
+                {% if title_parts.size > 1 %}
+                  <div class="chord-preview">
+                    <span class="artist-name">{{ title_parts[0] | strip }}</span>
+                    <span class="song-name">{{ title_parts[1] | strip }}</span>
+                  </div>
+                {% else %}
+                  <div class="chord-preview">
+                    <span class="song-name">{{ post.title }}</span>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="chord-info">
+                <h3>{{ post.title }}</h3>
+                <div class="chord-meta">
+                  <span class="chord-date">{{ post.date | date: "%d %b %Y" }}</span>
+                  {% if post.categories %}
+                    <span class="chord-category">{{ post.categories.first | capitalize }}</span>
+                  {% endif %}
+                </div>
+                {% if post.excerpt %}
+                  <p class="chord-excerpt">{{ post.excerpt | strip_html | truncate: 80 }}</p>
+                {% endif %}
+                <span class="card-link">Lihat Chord</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Blog Posts Section -->
+    {% assign blog_posts = site.posts | where_exp: "post", "post.categories contains 'tips' or post.categories contains 'tutorial'" %}
+    {% assign blog_posts = blog_posts | slice: 0, 3 %}
+    {% if blog_posts.size > 0 %}
+    <div class="blog-section">
+      <h2>Tips & Tutorial</h2>
+      <div class="post-cards">
+        {% for post in blog_posts %}
+        <div class="post-card">
+          <a href="{{ post.url | relative_url }}" class="post-card-link">
+            <div class="post-card-image">
+              {% if post.featured_image %}
+                <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+              {% else %}
+                <img data-auto-svg="true" 
+                     data-title="{{ post.title | truncate: 30 }}" 
+                     data-artist="RumusMusic" 
+                     data-width="120" 
+                     data-height="80" 
+                     alt="{{ post.title }}" 
+                     class="auto-generated-img">
+              {% endif %}
+            </div>
+            <div class="post-card-content">
+              <h3 class="post-card-title">{{ post.title }}</h3>
+              <div class="post-card-date">{{ post.date | date: "%d %B %Y" }}</div>
+              {% if post.excerpt %}
+                <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+              {% endif %}
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Popular Posts Widget -->
+    <div class="sidebar-widget">
+      <h3 class="widget-title">Chord Populer</h3>
+      <div class="popular-posts">
+        {% assign popular_posts = site.posts | slice: 0, 5 %}
+        <ul class="popular-post-list">
+          {% for post in popular_posts %}
+          <li class="popular-post-item">
+            <a href="{{ post.url | relative_url }}">
+              <span class="popular-post-title">{{ post.title }}</span>
+              <span class="popular-post-date">{{ post.date | date: "%d %b %Y" }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Categories Widget -->
+    {% if site.data.categories %}
+    <div class="sidebar-widget">
+      <h3 class="widget-title">Kategori Musik</h3>
+      <div class="category-list">
+        {% for category in site.data.categories %}
+        <a href="{{ '/category/' | append: category.slug | relative_url }}" class="category-button">
+          <span class="category-icon">{{ category.icon | default: "🎵" }}</span>
+          <span class="category-name">{{ category.name }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Recent Posts Widget -->
+    <div class="sidebar-widget">
+      <h3 class="widget-title">Artikel Terbaru</h3>
+      <div class="recent-posts">
+        {% assign recent_posts = site.posts | slice: 0, 4 %}
+        <ul class="recent-post-list">
+          {% for post in recent_posts %}
+          <li class="recent-post-item">
+            <a href="{{ post.url | relative_url }}">
+              <span class="recent-post-title">{{ post.title }}</span>
+              <span class="recent-post-date">{{ post.date | date: "%d %b" }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Enhanced styling for homepage */
+.search-container {
+  background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+  padding: 20px 0;
+  margin-bottom: 0;
+}
+
+.ads-section {
+  background-color: #f8f9fa;
+  padding: 15px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.ads-section .container {
+  text-align: center;
+}
+
+.search-form {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  width: 90%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 60px 15px 20px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.search-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #c62828;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.search-button:hover {
+  background-color: #d32f2f;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.main-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 60px 30px;
+  text-align: center;
+  margin-bottom: 50px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(198, 40, 40, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(198, 40, 40, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #c62828;
+  color: #c62828;
+  box-shadow: none;
+}
+
+.btn-outline:hover {
+  background: #c62828;
+  color: white;
+}
+
+.chord-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.chord-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.chord-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.chord-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.chord-thumbnail {
+  height: 120px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.chord-preview {
+  text-align: center;
+}
+
+.artist-name {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.song-name {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.chord-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255,255,255,0.9);
+  color: #c62828;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.chord-info {
+  padding: 25px;
+}
+
+.chord-info h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  color: #2c3e50;
+  line-height: 1.3;
+}
+
+.chord-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.chord-excerpt {
+  color: #6c757d;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.card-link {
+  display: inline-block;
+  background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(198, 40, 40, 0.3);
+}
+
+/* Sidebar Styling */
+.sidebar-widget {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.widget-title {
+  font-size: 1.4rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e9ecef;
+  font-weight: 700;
+}
+
+.popular-post-list, .recent-post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popular-post-item, .recent-post-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.popular-post-item:last-child, .recent-post-item:last-child {
+  border-bottom: none;
+}
+
+.popular-post-item a, .recent-post-item a {
+  color: #2c3e50;
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.popular-post-item a:hover, .recent-post-item a:hover {
+  color: #c62828;
+}
+
+.popular-post-title, .recent-post-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  display: block;
+}
+
+.popular-post-date, .recent-post-date {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-top: 5px;
+  display: block;
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.category-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.category-button:hover {
+  background: #c62828;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.category-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.category-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .main-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chord-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero {
+    padding: 40px 20px;
+  }
+  
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>

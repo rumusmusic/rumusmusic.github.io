@@ -1,0 +1,227 @@
+// Chord styling
+
+.chord-content {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.chord-header {
+  margin-bottom: var(--spacing-lg);
+  
+  .chord-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+  }
+  
+  .chord-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--gray-100);
+    border-radius: var(--border-radius);
+    
+    .transpose-control, .font-size-control {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      
+      label {
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        margin-right: var(--spacing-xs);
+      }
+      
+      select, button {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        background-color: white;
+        font-size: var(--font-size-sm);
+        cursor: pointer;
+        
+        &:hover {
+          border-color: var(--primary-color);
+        }
+      }
+      
+      button {
+        min-width: 40px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        
+        &:hover {
+          background-color: var(--primary-color);
+          color: white;
+          border-color: var(--primary-color);
+        }
+      }
+    }
+  }
+}
+
+.chord-body {
+  margin-bottom: var(--spacing-xl);
+  
+  pre.chord-text {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+    background-color: var(--gray-100);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    
+    .chord {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+  }
+}
+
+.chord-diagrams {
+  margin-bottom: var(--spacing-xl);
+  
+  h3 {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .chord-diagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .chord-diagram {
+    background-color: var(--card-bg);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    
+    h4 {
+      margin-bottom: var(--spacing-xs);
+      color: var(--primary-color);
+    }
+    
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.chord-autoscroll {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-md);
+  background-color: var(--gray-100);
+  border-radius: var(--border-radius);
+  
+  .autoscroll-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    
+    label {
+      font-size: var(--font-size-sm);
+    }
+    
+    input[type="range"] {
+      width: 100px;
+    }
+  }
+  
+  #autoscroll-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    
+    .play-icon {
+      font-size: var(--font-size-sm);
+    }
+    
+    &.active {
+      .play-icon:before {
+        content: "⏸";
+      }
+    }
+  }
+}
+
+.chord-related {
+  h3 {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .related-chords {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    
+    li {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--card-shadow-hover);
+      }
+      
+      a {
+        display: block;
+        padding: var(--spacing-md);
+      }
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .chord-header .chord-tools {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  .chord-autoscroll {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .autoscroll-controls {
+      width: 100%;
+      margin-top: var(--spacing-sm);
+      
+      input[type="range"] {
+        width: 100%;
+      }
+    }
+  }
+  
+  .chord-diagrams .chord-diagram-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .chord-body pre.chord-text {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-md);
+  }
+  
+  .chord-related .related-chords {
+    grid-template-columns: 1fr;
+  }
+}

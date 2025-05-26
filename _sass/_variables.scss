@@ -1,0 +1,92 @@
+:root {
+  // Colors
+  --primary-color: #c62828;
+  --primary-color-light: #e53935;
+  --primary-color-dark: #b71c1c;
+  
+  // Text colors
+  --text-color: #333333;
+  --text-muted: #666666;
+  --heading-color: #222222;
+  
+  // Background colors
+  --background-color: #ffffff;
+  --card-bg: #ffffff;
+  --code-background: #f5f5f5;
+  --table-header-bg: #f5f5f5;
+  
+  // Gray scale
+  --gray-100: #f5f5f5;
+  --gray-200: #eeeeee;
+  --gray-300: #dddddd;
+  --gray-400: #cccccc;
+  --gray-500: #999999;
+  --gray-600: #666666;
+  --gray-700: #444444;
+  --gray-800: #333333;
+  --gray-900: #222222;
+  
+  // Borders
+  --border-color: #eeeeee;
+  --border-radius: 4px;
+  
+  // Shadows
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  // Typography
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  
+  --font-size-xs: 1.2rem;
+  --font-size-sm: 1.4rem;
+  --font-size-base: 1.6rem;
+  --font-size-md: 1.8rem;
+  --font-size-lg: 2.2rem;
+  --font-size-xl: 2.6rem;
+  --font-size-xxl: 3.2rem;
+  
+  // Spacing
+  --spacing-xs: 0.4rem;
+  --spacing-sm: 0.8rem;
+  --spacing-md: 1.6rem;
+  --spacing-lg: 2.4rem;
+  --spacing-xl: 3.2rem;
+  --spacing-xxl: 4.8rem;
+  
+  // Layout
+  --container-width: 1200px;
+  --header-height: 6rem;
+  
+  // Other
+  --transition-speed: 0.3s;
+}
+
+// Dark mode variables
+[data-theme="dark"] {
+  --text-color: #e0e0e0;
+  --text-muted: #aaaaaa;
+  --heading-color: #ffffff;
+  
+  --background-color: #121212;
+  --card-bg: #1e1e1e;
+  --code-background: #2d2d2d;
+  --table-header-bg: #2d2d2d;
+  
+  --gray-100: #1e1e1e;
+  --gray-200: #2d2d2d;
+  --gray-300: #333333;
+  --gray-400: #444444;
+  --gray-500: #666666;
+  --gray-600: #888888;
+  --gray-700: #aaaaaa;
+  --gray-800: #cccccc;
+  --gray-900: #eeeeee;
+  
+  --border-color: #333333;
+  
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

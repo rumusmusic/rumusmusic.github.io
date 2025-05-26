@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} - {{ site.description }}{% endif %}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="keywords" content="{% if page.tags %}{{ page.tags | join: ', ' }}, {% endif %}chord gitar, kunci gitar, belajar gitar, rumus musik">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ page.url | absolute_url }}">
+  <meta property="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  
+  <!-- CSS Optimization -->
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "{% if page.layout == 'post' %}BlogPosting{% else %}WebSite{% endif %}",
+    "headline": "{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}",
+    "description": "{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines }}{% else %}{{ site.description }}{% endif %}",
+    "url": "{{ page.url | absolute_url }}",
+    "author": {
+      "@type": "Organization",
+      "name": "{{ site.title }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ site.title }}"
+    }
+    {% if page.date %},
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "dateModified": "{{ page.date | date_to_xmlschema }}"
+    {% endif %}
+  }
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="navbar">
+        <div class="navbar-brand">
+          <a href="/" class="brand-link">
+            <h1>{{ site.title }}</h1>
+          </a>
+        </div>
+        
+        <div class="navbar-menu">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/chords.html" class="nav-link">Chord</a>
+          <a href="/transpose.html" class="nav-link">Transpose</a>
+          <a href="/about/" class="nav-link">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      {{ content }}
+    </div>
+  </main>
+
+  <!-- Sidebar for Latest Posts -->
+  {% if page.layout != 'post' and site.posts.size > 0 %}
+  <aside class="sidebar-widget">
+    <div class="container">
+      <div class="widget-content">
+        <h3>Artikel Terbaru</h3>
+        <div class="posts-list">
+          {% for post in site.posts limit:5 %}
+          <article class="post-item">
+            <h4><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %B %Y" }}</time>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </aside>
+  {% endif %}
+
+  <!-- Footer -->
+  {% include footer.html %}
+
+  <!-- Performance Scripts -->
+  <script>
+    // Lazy loading for images
+    if ('IntersectionObserver' in window) {
+      const images = document.querySelectorAll('img[data-src]');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+          }
+        });
+      });
+      images.forEach(img => imageObserver.observe(img));
+    }
+
+    // Service Worker for caching (optional)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .catch(err => console.log('SW registration failed'));
+      });
+    }
+  </script>
+</body>
+</html>

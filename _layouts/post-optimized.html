@@ -1,0 +1,432 @@
+---
+layout: professional
+---
+
+<article class="post-content">
+  <div class="container">
+    
+    <!-- Post Header -->
+    <header class="post-header">
+      <div class="post-meta">
+        {% assign title_parts = page.title | split: ' - ' %}
+        {% if title_parts.size > 1 %}
+          <span class="post-artist">{{ title_parts[0] | strip }}</span>
+        {% endif %}
+        <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">
+          {{ page.date | date: "%d %B %Y" }}
+        </time>
+        {% if page.categories %}
+          <div class="post-categories">
+            {% for category in page.categories %}
+              <a href="{{ '/category/' | relative_url }}{{ category | slugify }}/" class="category-tag">{{ category | capitalize }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <h1 class="post-title">
+        {% if title_parts.size > 1 %}
+          <span class="artist-name">{{ title_parts[0] | strip }}</span>
+          <span class="separator"> - </span>
+          <span class="song-name">{{ title_parts[1] | strip }}</span>
+        {% else %}
+          {{ page.title }}
+        {% endif %}
+      </h1>
+      
+      {% if page.excerpt %}
+        <p class="post-excerpt">{{ page.excerpt | strip_html }}</p>
+      {% endif %}
+      
+      {% if page.tags %}
+        <div class="post-tags">
+          {% for tag in page.tags %}
+            <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </header>
+
+    <!-- Post Content -->
+    <div class="post-body">
+      {{ content }}
+    </div>
+
+    <!-- Share Buttons -->
+    <div class="post-share">
+      <h3>Bagikan Artikel Ini</h3>
+      <div class="share-buttons">
+        <a href="https://wa.me/?text={{ page.title | uri_escape }}%20{{ page.url | absolute_url | uri_escape }}" target="_blank" class="share-btn whatsapp">
+          📱 WhatsApp
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}" target="_blank" class="share-btn facebook">
+          📘 Facebook
+        </a>
+        <a href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ page.url | absolute_url | uri_escape }}" target="_blank" class="share-btn twitter">
+          🐦 Twitter
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="post-navigation">
+      {% if page.previous %}
+        <a href="{{ page.previous.url | relative_url }}" class="nav-previous">
+          <span class="nav-label">← Sebelumnya</span>
+          <span class="nav-title">{{ page.previous.title }}</span>
+        </a>
+      {% endif %}
+      
+      {% if page.next %}
+        <a href="{{ page.next.url | relative_url }}" class="nav-next">
+          <span class="nav-label">Selanjutnya →</span>
+          <span class="nav-title">{{ page.next.title }}</span>
+        </a>
+      {% endif %}
+    </nav>
+
+    <!-- Related Posts -->
+    {% assign related_posts = site.posts | where_exp: "post", "post.url != page.url" | where_exp: "post", "post.categories contains page.categories.first" | limit: 3 %}
+    {% if related_posts.size > 0 %}
+    <section class="related-posts">
+      <h3>Artikel Serupa</h3>
+      <div class="related-grid">
+        {% for post in related_posts %}
+        <article class="related-item">
+          <a href="{{ post.url | relative_url }}" class="related-link">
+            <div class="related-image">
+              {% assign title_parts = post.title | split: ' - ' %}
+              {% if title_parts.size > 1 %}
+                {% assign artist = title_parts[0] %}
+                {% assign song_title = title_parts[1] %}
+              {% else %}
+                {% assign artist = "RumusMusic" %}
+                {% assign song_title = post.title %}
+              {% endif %}
+              <img data-auto-svg data-title="{{ song_title | strip }}" data-artist="{{ artist | strip }}" data-width="150" data-height="100" alt="{{ post.title }}" loading="lazy">
+            </div>
+            <div class="related-content">
+              <h4>{{ post.title }}</h4>
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+            </div>
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </div>
+</article>
+
+<style>
+.post-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.post-header {
+  margin-bottom: 3rem;
+  text-align: center;
+  border-bottom: 2px solid #f8f9fa;
+  padding-bottom: 2rem;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.post-artist {
+  background: #c62828;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.post-date {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.post-categories {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.category-tag {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.category-tag:hover {
+  background: #1976d2;
+  color: white;
+}
+
+.post-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  
+  .artist-name {
+    color: #c62828;
+    font-weight: 700;
+  }
+  
+  .separator {
+    color: #6c757d;
+  }
+  
+  .song-name {
+    color: #212529;
+    font-weight: 600;
+  }
+}
+
+.post-excerpt {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.post-tags {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #f8f9fa;
+  color: #495057;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: 1px solid #dee2e6;
+}
+
+.post-body {
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  
+  h2, h3, h4 {
+    color: #c62828;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    margin-bottom: 1.5rem;
+  }
+  
+  code {
+    background: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  
+  pre {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+}
+
+.post-share {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  h3 {
+    color: #c62828;
+    margin-bottom: 1rem;
+  }
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  
+  &.whatsapp {
+    background: #25d366;
+    color: white;
+    
+    &:hover {
+      background: #20b358;
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.facebook {
+    background: #1877f2;
+    color: white;
+    
+    &:hover {
+      background: #166fe5;
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.twitter {
+    background: #1da1f2;
+    color: white;
+    
+    &:hover {
+      background: #0d95e8;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.post-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.nav-previous,
+.nav-next {
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #495057;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.nav-next {
+  text-align: right;
+}
+
+.nav-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.nav-title {
+  display: block;
+  font-weight: 600;
+  color: #c62828;
+}
+
+.related-posts {
+  h3 {
+    color: #c62828;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.related-item {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+}
+
+.related-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.related-image {
+  height: 100px;
+  background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.related-content {
+  padding: 1rem;
+  
+  h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #212529;
+  }
+  
+  time {
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
+}
+
+@media (max-width: 768px) {
+  .post-title {
+    font-size: 2rem;
+  }
+  
+  .post-navigation {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-next {
+    text-align: left;
+  }
+  
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .share-buttons {
+    flex-direction: column;
+  }
+}
+</style>

@@ -1,0 +1,18 @@
+<div class="chord-listing">
+  {% if include.chords.size > 0 %}
+    <div class="chord-grid">
+      {% for chord in include.chords %}
+        <div class="chord-item">
+          <a href="{{ chord.url | relative_url }}" class="chord-link">
+            <h3 class="chord-title">{{ chord.title }}</h3>
+            <span class="chord-artist">{{ chord.artist }}</span>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="no-chords">
+      <p>No chord entries found.</p>
+    </div>
+  {% endif %}
+</div>

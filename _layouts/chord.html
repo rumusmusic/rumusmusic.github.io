@@ -1,0 +1,146 @@
+---
+layout: default
+---
+<div class="chord-page">
+  <div class="breadcrumbs">
+    <a href="{{ '/' | relative_url }}">Home</a> &raquo;
+    <a href="{{ '/chords/' | relative_url }}">Chord</a> &raquo;
+    <a href="{{ '/chords/' | append: page.title | first | downcase | relative_url }}">{{ page.title | first | upcase }}</a> &raquo;
+    <span>{{ page.title }}</span>
+  </div>
+
+  <article class="chord-content">
+    <header class="chord-header">
+      <h1>{{ page.title }}</h1>
+      <div class="chord-meta">
+        <span class="artist">{{ page.artist }}</span> 
+        {% if page.album %}
+        <span class="album">Album: {{ page.album }}</span>
+        {% endif %}
+        <span class="genre">Genre: {{ page.genre }}</span>
+      </div>
+    </header>
+
+    <div class="chord-actions">
+      <button id="transpose-up" class="btn btn-sm">Transpose Up</button>
+      <button id="transpose-down" class="btn btn-sm">Transpose Down</button>
+      <button id="reset-transpose" class="btn btn-sm">Reset</button>
+      <div class="transpose-status">Key: <span id="current-key">{{ page.key | default: "C" }}</span></div>
+    </div>
+
+    <div class="chord-body" id="chord-content">
+      {{ content }}
+    </div>
+
+    <div class="chord-diagrams">
+      <h3>Chord Diagrams</h3>
+      <div class="diagrams-container">
+        {% for chord in page.chords %}
+          <div class="chord-diagram">
+            <h4>{{ chord }}</h4>
+            <!-- We'll render chord diagrams with SVG in JavaScript -->
+            <div class="diagram" data-chord="{{ chord }}"></div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if page.tags.size > 0 %}
+    <div class="chord-tags">
+      <h3>Tags</h3>
+      <div class="tags">
+        {% for tag in page.tags %}
+          <a href="{{ '/tags/' | append: tag | slugify | relative_url }}" class="tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </article>
+
+  <div class="related-chords">
+    <h3>Related Chords</h3>
+    <div class="chord-cards">
+      {% assign related_chords = site.chords | where: "artist", page.artist | where_exp: "chord", "chord.title != page.title" | limit: 4 %}
+      {% if related_chords.size > 0 %}
+        {% for chord in related_chords %}
+          <div class="chord-card">
+            <h4><a href="{{ chord.url | relative_url }}">{{ chord.title }}</a></h4>
+            <span class="artist">{{ chord.artist }}</span>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No related chords found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the chord diagrams
+    const diagramElements = document.querySelectorAll('.diagram');
+    diagramElements.forEach(function(element) {
+      const chordName = element.getAttribute('data-chord');
+      renderChordDiagram(element, chordName);
+    });
+    
+    // Initialize the transpose functionality
+    initializeTranspose();
+  });
+
+  function renderChordDiagram(element, chordName) {
+    // This would be replaced with actual chord diagram rendering logic
+    // For now, we'll use a placeholder
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "100");
+    svg.setAttribute("height", "120");
+    svg.setAttribute("viewBox", "0 0 100 120");
+    svg.innerHTML = `
+      <rect x="5" y="5" width="90" height="110" fill="none" stroke="currentColor" stroke-width="2" />
+      <text x="50" y="70" text-anchor="middle" fill="currentColor" font-size="16">${chordName}</text>
+    `;
+    element.appendChild(svg);
+  }
+
+  function initializeTranspose() {
+    const transposeUp = document.getElementById('transpose-up');
+    const transposeDown = document.getElementById('transpose-down');
+    const resetTranspose = document.getElementById('reset-transpose');
+    const currentKey = document.getElementById('current-key');
+    const chordContent = document.getElementById('chord-content');
+    
+    // Store the original content
+    const originalContent = chordContent.innerHTML;
+    let transposeFactor = 0;
+    
+    transposeUp.addEventListener('click', function() {
+      transposeFactor++;
+      updateTransposedContent();
+    });
+    
+    transposeDown.addEventListener('click', function() {
+      transposeFactor--;
+      updateTransposedContent();
+    });
+    
+    resetTranspose.addEventListener('click', function() {
+      transposeFactor = 0;
+      chordContent.innerHTML = originalContent;
+      currentKey.textContent = '{{ page.key | default: "C" }}';
+    });
+    
+    function updateTransposedContent() {
+      // This is a placeholder for actual transposition logic
+      // In a real implementation, we would parse the chord content and transpose the chords
+      const startKey = '{{ page.key | default: "C" }}';
+      const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+      const startIndex = keys.indexOf(startKey);
+      const newIndex = (startIndex + transposeFactor + 12) % 12;
+      currentKey.textContent = keys[newIndex];
+      
+      // For the demo, we'll just show that something happened
+      chordContent.innerHTML = originalContent + 
+        `<div class="transpose-notice">Transposed ${Math.abs(transposeFactor)} half-step${Math.abs(transposeFactor) !== 1 ? 's' : ''} ${transposeFactor > 0 ? 'up' : 'down'} to ${keys[newIndex]}</div>`;
+    }
+  }
+</script>

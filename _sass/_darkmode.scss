@@ -1,0 +1,123 @@
+// Dark mode styling
+[data-theme="dark"] {
+  // Header styles in dark mode
+  .site-header {
+    background-color: var(--gray-900);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    
+    .moon-icon {
+      display: none;
+    }
+    
+    .sun-icon {
+      display: block;
+    }
+  }
+  
+  // Alpha navigation
+  .alpha-nav {
+    background-color: var(--gray-800);
+    border-bottom-color: var(--gray-700);
+  }
+  
+  // Card styling
+  .chord-card, .blog-card, .chord-item {
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  // Code and pre blocks
+  pre, code, .chord-body pre.chord-text {
+    background-color: var(--gray-800);
+    color: var(--gray-300);
+  }
+  
+  // Search container
+  .search-container {
+    background-color: var(--gray-800);
+    
+    input {
+      background-color: var(--gray-900);
+      color: white;
+      border: 1px solid var(--gray-700);
+      
+      &::placeholder {
+        color: var(--gray-500);
+      }
+      
+      &:focus {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+      }
+    }
+    
+    .search-button {
+      color: var(--gray-400);
+      
+      &:hover {
+        color: white;
+      }
+    }
+  }
+  
+  // Chord tools
+  .chord-tools, .chord-autoscroll {
+    background-color: var(--gray-800);
+    
+    button, select {
+      background-color: var(--gray-700);
+      color: var(--gray-300);
+      border-color: var(--gray-600);
+      
+      &:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+    }
+  }
+  
+  // Chord diagrams
+  .chord-diagram {
+    background-color: var(--gray-800);
+    
+    svg {
+      rect, line {
+        stroke: var(--gray-400);
+      }
+      
+      circle {
+        fill: var(--primary-color);
+      }
+    }
+  }
+  
+  // Tables
+  table {
+    th {
+      background-color: var(--gray-800);
+    }
+    
+    td {
+      border-color: var(--gray-700);
+    }
+  }
+  
+  // Form elements
+  input, textarea, select {
+    background-color: var(--gray-800);
+    color: var(--gray-300);
+    border-color: var(--gray-700);
+    
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.2);
+    }
+    
+    &::placeholder {
+      color: var(--gray-500);
+    }
+  }
+}

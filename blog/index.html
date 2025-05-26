@@ -1,0 +1,83 @@
+---
+layout: default
+title: Blog Rumus Music
+description: Tips, tutorial, dan informasi terbaru seputar gitar dan musik
+---
+
+<div class="blog-index">
+  <div class="section-header">
+    <h1>Blog Rumus Music</h1>
+    <p class="lead">Tips, tutorial, dan informasi terbaru seputar gitar dan musik</p>
+  </div>
+  
+  <div class="blog-grid">
+    {% for post in site.posts %}
+      <div class="blog-card">
+        {% if post.featured_image %}
+          <div class="blog-card-image">
+            <a href="{{ post.url | relative_url }}">
+              <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+            </a>
+          </div>
+        {% endif %}
+        
+        <div class="blog-card-content">
+          <h2 class="blog-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+          
+          <div class="blog-meta">
+            <span class="blog-date">{{ post.date | date: "%d %B %Y" }}</span>
+            {% if post.author %}
+              <span class="blog-author">oleh {{ post.author }}</span>
+            {% endif %}
+          </div>
+          
+          <div class="blog-excerpt">
+            {% if post.excerpt %}
+              {{ post.excerpt }}
+            {% else %}
+              {{ post.content | strip_html | truncatewords: 30 }}
+            {% endif %}
+          </div>
+          
+          <a href="{{ post.url | relative_url }}" class="read-more">Baca Selengkapnya</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | relative_url }}" class="prev">← Sebelumnya</a>
+      {% endif %}
+      
+      {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+          <span class="current-page">{{ page }}</span>
+        {% elsif page == 1 %}
+          <a href="{{ '/blog/' | relative_url }}">{{ page }}</a>
+        {% else %}
+          <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}">{{ page }}</a>
+        {% endif %}
+      {% endfor %}
+      
+      {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | relative_url }}" class="next">Selanjutnya →</a>
+      {% endif %}
+    </div>
+  {% endif %}
+  
+  <div class="blog-categories">
+    <h2>Kategori</h2>
+    <div class="category-list">
+      {% assign categories = site.categories | sort %}
+      {% for category in categories %}
+        <a href="{{ '/category/' | append: category[0] | slugify | relative_url }}" class="category-tag">
+          {{ category[0] }} <span class="count">({{ category[1].size }})</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
