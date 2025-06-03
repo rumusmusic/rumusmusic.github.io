@@ -1,5 +1,4 @@
 ---
-image: /assets/img/laki-laki-bukan-pengecut-dewa19.jpg
 layout: post
 title: "Dewa 19 feat. Marcello Tahitoe - Laki-Laki Bukan Pengecut"
 date: 2025-06-03 16:00:00 +0700
@@ -20,7 +19,7 @@ seo:
   description: "Chord dan lirik lagu Dewa 19 - Laki-Laki Bukan Pengecut feat. Marcello Tahitoe (Ello). Lengkap dengan kunci gitar dasar untuk pemula, cocok dimainkan akustik."
   keywords: "Dewa 19, chord laki-laki bukan pengecut, chord Dewa 19 feat Ello, kunci gitar lagu Dewa 19, lagu pop rock Indonesia"
   author: "Tim RumusMusic"
-  image: /assets/img/laki-laki-bukan-pe
+ image: /assets/img/laki-laki-bukan-pengecut-dewa19.jpg
 ---
 
 ### 🎸 Chord Gitar: Laki-Laki Bukan Pengecut – Dewa 19 feat. Marcello Tahitoe
