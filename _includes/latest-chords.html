@@ -1,0 +1,26 @@
+<section class="latest-chords">
+  <h2 class="section-title">{{ include.title | default: "Chord Terbaru" }}</h2>
+  
+  <div class="chord-cards">
+    {% assign latest_chords = site.chords | sort: "date" | reverse | limit: include.limit | default: 5 %}
+    {% for chord in latest_chords %}
+      <div class="chord-card">
+        <h3 class="chord-title"><a href="{{ chord.url | relative_url }}">{{ chord.title }}</a></h3>
+        <div class="chord-meta">
+          <span class="chord-artist">{{ chord.artist }}</span>
+          <span class="chord-date">{{ chord.date | date: "%d %b %Y" }}</span>
+        </div>
+        {% if chord.excerpt %}
+          <p class="chord-excerpt">{{ chord.excerpt | strip_html | truncatewords: 20 }}</p>
+        {% endif %}
+        <a href="{{ chord.url | relative_url }}" class="read-more">Lihat Chord</a>
+      </div>
+    {% endfor %}
+  </div>
+  
+  {% if include.show_more_link %}
+    <div class="more-link">
+      <a href="{{ '/chords/' | relative_url }}" class="btn">Lihat Semua Chord</a>
+    </div>
+  {% endif %}
+</section>

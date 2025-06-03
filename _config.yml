@@ -1,0 +1,101 @@
+# Site settings
+title: RumusMusic
+email: contact@rumusmusic.com
+description: >-
+  Kumpulan chord kunci gitar dasar dan mudah disertai lirik lagu Indonesia maupun Mancanegara.
+  Terdapat ribuan chord gitar dari artis / band pada database kami.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://rumusmusic.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+permalink: /:categories/:title/
+sass:
+  sass_dir: _sass
+  style: compressed
+  
+# Performance optimizations
+incremental: true
+profile: false
+strict_front_matter: true
+liquid:
+  error_mode: warn
+  strict_filters: true
+  strict_variables: false
+
+# Cache settings
+cache_dir: .jekyll-cache
+
+# Collections
+collections:
+  chords:
+    output: true
+    permalink: /chord/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "chords"
+    values:
+      layout: "chord"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post-optimized"
+  - scope:
+      path: "_pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - .git
+  - .github
+  - README.md
+  - LICENSE
+  - test-site
+  - attached_assets
+
+# Keep files
+keep_files:
+  - .git
+  - .nojekyll
+
+# Limit posts for faster builds
+limit_posts: 10
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# SEO settings
+twitter:
+  username: rumusmusic
+  card: summary
+logo: /assets/img/logo.svg
+social:
+  name: RumusMusic
+  links:
+    - https://twitter.com/rumusmusic
+    - https://facebook.com/rumusmusic
+    - https://instagram.com/rumusmusic
+    - https://youtube.com/rumusmusic
+
+# Other settings
+timezone: Asia/Jakarta
+language: id
+include:
+  - _pages

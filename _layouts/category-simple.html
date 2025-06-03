@@ -1,0 +1,169 @@
+---
+layout: default
+---
+
+{% include alpha-nav.html %}
+
+<div class="category-page">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> &raquo;
+    <a href="/category/">Kategori</a> &raquo;
+    <span>{{ page.category_letter | upcase }}</span>
+  </div>
+
+  <h1 class="category-title">Chord {{ page.category_letter | upcase }}</h1>
+  
+  <div class="category-description">
+    <p>Kumpulan chord kunci gitar yang dimulai dengan huruf {{ page.category_letter | upcase }}.</p>
+  </div>
+
+  <div class="ads-section">
+    <div class="container">
+      {% include adsense.html %}
+    </div>
+  </div>
+
+  <div class="chord-list">
+    {% assign category_posts = "" | split: "" %}
+    {% for post in site.posts %}
+      {% assign first_char = post.title | slice: 0 %}
+      {% assign letter = page.category_letter %}
+      {% assign letter_upper = page.category_letter | upcase %}
+      {% if first_char == letter or first_char == letter_upper %}
+        {% assign category_posts = category_posts | push: post %}
+      {% endif %}
+    {% endfor %}
+    
+    {% if category_posts.size > 0 %}
+      <div class="chord-grid">
+        {% for post in category_posts %}
+          <div class="chord-card">
+            <a href="{{ post.url | relative_url }}" class="chord-card-link">
+              <div class="chord-card-inner">
+                <div class="chord-thumbnail">
+                  {% assign title_parts = post.title | split: ' - ' %}
+                  {% if title_parts.size > 1 %}
+                    <div class="chord-preview">
+                      <span class="artist-name">{{ title_parts[0] | strip }}</span>
+                      <span class="song-name">{{ title_parts[1] | strip }}</span>
+                    </div>
+                  {% else %}
+                    <div class="chord-preview">
+                      <span class="song-name">{{ post.title }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="chord-info">
+                  <h3>{{ post.title }}</h3>
+                  <div class="chord-meta">
+                    <span class="chord-date">{{ post.date | date: "%d %b %Y" }}</span>
+                    {% if post.categories %}
+                      <span class="chord-category">{{ post.categories.first | capitalize }}</span>
+                    {% endif %}
+                  </div>
+                  <span class="card-link">Lihat Chord</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-chords">
+        <div class="empty-state">
+          <div class="empty-icon">🎸</div>
+          <h3>Belum Ada Chord</h3>
+          <p>Belum ada chord yang dimulai dengan huruf {{ page.category_letter | upcase }}. Silahkan periksa kategori lainnya atau kembali ke halaman utama.</p>
+          <a href="/" class="btn">Kembali ke Home</a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+.category-page {
+  padding: 30px 0;
+}
+
+.breadcrumbs {
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.breadcrumbs a {
+  color: #c62828;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.category-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.category-description {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  border-left: 4px solid #c62828;
+}
+
+.category-description p {
+  margin: 0;
+  color: #495057;
+  font-size: 1.1rem;
+}
+
+.chord-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 30px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  margin-top: 30px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 2rem;
+  }
+  
+  .chord-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

@@ -1,0 +1,39 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{% if page.layout == 'chord' %}MusicComposition{% else %}WebSite{% endif %}",
+  {% if page.layout == 'chord' %}
+  "name": "{{ page.title }}",
+  "composer": {
+    "@type": "MusicGroup",
+    "name": "{{ page.artist }}"
+  },
+  "inLanguage": "{{ site.language }}",
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | replace:'index.html','' | absolute_url }}"
+  },
+  {% else %}
+  "name": "{{ site.title }}",
+  "url": "{{ site.url }}",
+  "description": "{{ site.description }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ site.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  {% endif %}
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site.title }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.url }}{{ site.logo }}",
+      "width": "180",
+      "height": "45"
+    }
+  }
+}
+</script>

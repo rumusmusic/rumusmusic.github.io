@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} - {{ site.description }}{% endif %}</title>
+  <meta name="title" content="{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ page.url | absolute_url }}">
+  <meta property="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  
+  <!-- Canonical -->
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ '/assets/css/optimized-styles.css' | relative_url }}">
+  
+  <!-- SEO Plugins -->
+  {% seo %}
+  
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR-ADSENSE-ID"
+     crossorigin="anonymous"></script>
+</head>
+
+<body class="{% if page.layout %}{{ page.layout }}-layout{% endif %}">
+  
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="navbar-brand">
+          <a href="{{ '/' | relative_url }}" class="brand-link" aria-label="RumusMusic Homepage">
+            <h1>{{ site.title }}</h1>
+          </a>
+        </div>
+        
+        <div class="navbar-menu">
+          <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">Home</a>
+          <a href="{{ '/chords/' | relative_url }}" class="nav-link {% if page.url contains '/chords/' %}active{% endif %}">Chord</a>
+          <a href="{{ '/transpose/' | relative_url }}" class="nav-link {% if page.url contains '/transpose/' %}active{% endif %}">Transpose</a>
+          <a href="{{ '/category/' | relative_url }}" class="nav-link {% if page.url contains '/category/' %}active{% endif %}">Kategori</a>
+          <a href="{{ '/about/' | relative_url }}" class="nav-link {% if page.url contains '/about/' %}active{% endif %}">About</a>
+        </div>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Container for main layout -->
+  <div class="site-wrapper">
+    <div class="container">
+      <div class="main-layout">
+        
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+          {{ content }}
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" role="complementary">
+          
+          <!-- AdSense Ad - After Navigation -->
+          <div class="widget ad-widget">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR-ADSENSE-ID"
+                 data-ad-slot="YOUR-AD-SLOT-ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+
+          <!-- Search Widget -->
+          <div class="widget search-widget">
+            <h3 class="widget-title">Cari Chord</h3>
+            <form class="search-form" role="search">
+              <input type="search" class="search-input" placeholder="Cari lagu atau artis..." aria-label="Search">
+              <button type="submit" class="search-button" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- Popular Posts Widget -->
+          <div class="widget popular-posts-widget">
+            <h3 class="widget-title">Chord Populer</h3>
+            <div class="popular-posts-list">
+              {% assign popular_posts = site.posts | sort: 'date' | reverse %}
+              {% assign popular_posts = popular_posts | slice: 0, 6 %}
+              {% for post in popular_posts %}
+              <article class="popular-post-item">
+                <a href="{{ post.url | relative_url }}" class="popular-post-link">
+                  <div class="popular-post-image">
+                    {% assign title_parts = post.title | split: ' - ' %}
+                    {% if title_parts.size > 1 %}
+                      {% assign artist = title_parts[0] %}
+                      {% assign song_title = title_parts[1] %}
+                    {% else %}
+                      {% assign artist = "RumusMusic" %}
+                      {% assign song_title = post.title %}
+                    {% endif %}
+                    <img data-auto-svg data-title="{{ song_title | strip }}" data-artist="{{ artist | strip }}" data-width="60" data-height="40" alt="{{ post.title }}" loading="lazy">
+                  </div>
+                  <div class="popular-post-content">
+                    <h4 class="popular-post-title">{{ post.title | truncate: 40 }}</h4>
+                    <time class="popular-post-date" datetime="{{ post.date | date_to_xmlschema }}">
+                      {{ post.date | date: "%d %b %Y" }}
+                    </time>
+                  </div>
+                </a>
+              </article>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Categories Widget (without "Kategori Musik" title) -->
+          <div class="widget categories-widget">
+            <h3 class="widget-title">Kategori</h3>
+            <div class="categories-grid">
+              {% assign categories = site.categories | sort %}
+              {% for category in categories limit: 12 %}
+              <a href="{{ '/category/' | relative_url }}{{ category[0] | slugify }}/" class="category-item">
+                <span class="category-name">{{ category[0] | capitalize }}</span>
+                <span class="category-count">{{ category[1] | size }}</span>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Recent Posts Widget -->
+          <div class="widget recent-posts-widget">
+            <h3 class="widget-title">Artikel Terbaru</h3>
+            <div class="recent-posts-list">
+              {% for post in site.posts limit: 5 %}
+              <article class="recent-post-item">
+                <a href="{{ post.url | relative_url }}" class="recent-post-link">
+                  <h4 class="recent-post-title">{{ post.title | truncate: 45 }}</h4>
+                  <time class="recent-post-date" datetime="{{ post.date | date_to_xmlschema }}">
+                    {{ post.date | date: "%d %b %Y" }}
+                  </time>
+                </a>
+              </article>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Tags Cloud Widget -->
+          <div class="widget tags-widget">
+            <h3 class="widget-title">Tag Populer</h3>
+            <div class="tags-cloud">
+              {% assign tags = site.tags | sort %}
+              {% for tag in tags limit: 20 %}
+              <a href="{{ '/tag/' | relative_url }}{{ tag[0] | slugify }}/" class="tag-item" style="font-size: {{ tag[1] | size | times: 0.8 | plus: 0.8 }}em;">
+                {{ tag[0] }}
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Social Media Widget -->
+          <div class="widget social-widget">
+            <h3 class="widget-title">Ikuti Kami</h3>
+            <div class="social-links">
+              <a href="#" class="social-link facebook" aria-label="Facebook">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="#" class="social-link twitter" aria-label="Twitter">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+              <a href="#" class="social-link youtube" aria-label="YouTube">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  {% include footer.html %}
+
+  <!-- Scripts -->
+  <script src="{{ '/assets/js/optimized-main.js' | relative_url }}"></script>
+  
+  <!-- Auto SVG Generator -->
+  {% include auto-svg-generator.html %}
+
+</body>
+</html>

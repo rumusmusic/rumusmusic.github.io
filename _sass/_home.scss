@@ -1,0 +1,224 @@
+// Home page styles
+.hero {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+  margin-bottom: var(--spacing-xl);
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+  
+  p {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    
+    .btn {
+      min-width: 150px;
+    }
+  }
+}
+
+.welcome-section {
+  margin-bottom: var(--spacing-xxl);
+  
+  .welcome-text {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-xl);
+    text-align: center;
+    
+    h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    p {
+      font-size: var(--font-size-md);
+      color: var(--text-muted);
+    }
+  }
+  
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    
+    .feature {
+      text-align: center;
+      
+      .feature-icon {
+        font-size: 4rem;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-md);
+      }
+      
+      h3 {
+        margin-bottom: var(--spacing-sm);
+      }
+      
+      p {
+        color: var(--text-muted);
+        font-size: var(--font-size-sm);
+      }
+    }
+  }
+}
+
+.featured-chords {
+  margin-bottom: var(--spacing-xxl);
+  
+  .featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    
+    h2 {
+      margin-bottom: 0;
+    }
+    
+    .view-all {
+      font-weight: 600;
+    }
+  }
+}
+
+.chord-categories {
+  margin-bottom: var(--spacing-xxl);
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .category-card {
+    background-color: var(--card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    
+    .category-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    h3 {
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--text-muted);
+    }
+  }
+}
+
+.latest-chords {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.site-cta {
+  background-color: var(--gray-100);
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+  margin-bottom: var(--spacing-xxl);
+  
+  .cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  p {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-muted);
+  }
+  
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--spacing-lg) 0;
+    
+    h1 {
+      font-size: var(--font-size-xl);
+    }
+    
+    p {
+      font-size: var(--font-size-base);
+    }
+    
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  }
+  
+  .welcome-section {
+    .welcome-text {
+      h2 {
+        font-size: var(--font-size-lg);
+      }
+      
+      p {
+        font-size: var(--font-size-base);
+      }
+    }
+  }
+  
+  .featured-chords {
+    .featured-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+    }
+  }
+  
+  .site-cta {
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section important-pages">
+        <h3>Halaman Penting</h3>
+        <ul class="footer-links">
+          {% assign pages_collection = site.pages | where_exp: "item", "item.path contains '_pages'" %}
+          {% for page in pages_collection %}
+            {% unless page.exclude_from_footer %}
+              <li><a href="{{ page.url | relative_url }}">{{ page.title | default: page.name | remove: '.md' | capitalize }}</a></li>
+            {% endunless %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+        <p class="disclaimer-text">Semua konten chord disediakan untuk tujuan pembelajaran. Dukung musisi dengan membeli album original.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% include auto-svg-generator.html %}
+
+<style>
+.site-footer {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+  padding: 3rem 0 1rem;
+  margin-top: 4rem;
+}
+
+.footer-content {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-links li a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+}
+
+.footer-links li a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+}
+
+.footer-bottom {
+  border-top: 1px solid #34495e;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.copyright p {
+  margin: 0.5rem 0;
+  color: #95a5a6;
+}
+
+.copyright p:first-child {
+  font-weight: 600;
+  color: #ecf0f1;
+}
+
+.disclaimer-text {
+  font-size: 0.9rem;
+  color: #95a5a6;
+}
+
+@media (max-width: 768px) {
+  .footer-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .footer-links li a {
+    display: block;
+    text-align: center;
+  }
+}
+</style>
