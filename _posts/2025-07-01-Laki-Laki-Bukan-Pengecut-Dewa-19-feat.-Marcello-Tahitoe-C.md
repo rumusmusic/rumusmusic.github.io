@@ -1,6 +1,5 @@
 ---
 layout: post
-title: "Dewa 19 feat. Marcello Tahitoe - Laki-Laki Bukan Pengecut"
 date: 2025-06-03 16:00:00 +0700
 categories: 
   - chord
